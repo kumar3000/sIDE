@@ -1,6 +1,6 @@
 # Compiler and Flags
 CXX = g++
-CXXFLAGS = -std=c++11 -Wall -Wextra -g
+CXXFLAGS = -std=c++20 -Wall -Werror -Wextra -g
 CPPFLAGS = -Iinclude -Iinclude/imgui -Iinclude/imgui/backends
 
 # Libraries (Windows: replace -lGL with -lopengl32)
@@ -20,7 +20,10 @@ SRCS = $(wildcard src/*.c src/*.cpp) \
 all:
 	@mkdir -p bin
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -o $(TARGET) $(SRCS) $(LIBS)
+	./bin/main
 
 # Clean Rule
 clean:
 	rm -f $(TARGET)
+
+.PHONY: all clean
