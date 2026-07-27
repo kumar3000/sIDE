@@ -1,27 +1,38 @@
 //--- OpenGL
-// #include <glad/glad.h>
+#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+//--- include
+#include <iostream>
+
+//--- Macros
+#define HEIGHT 600
+#define WIDTH 800
+
 int main() {
-    GLFWwindow* window;
+  glfwInitHint(GLFW_PLATFORM, GLFW_PLATFORM_WAYLAND);
+  if (!glfwInit()) {
+    std::cerr << "Failed to initializes GLFW" << std::endl;
+    return -1;
+  }
+  
+  GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "TEST", NULL, NULL);
+  if (!window) {
+    std::cerr << "Failed to create GLFW window" << std::endl;
+    return -1;
+  }
 
-    if (!glfwInit())
-        return -1;
+  glfwMakeContextCurrent(window);
 
-    window = glfwCreateWindow(640, 480, "TEST", NULL, NULL);
-    if (!window) {
-        glfwTerminate();
-        return -1;
-    }
+  gladLoadGL();
 
-    glfwMakeContextCurrent(window);
+  glViewport(0, 0, WIDTH, HEIGHT);
 
-    while (!glfwWindowShouldClose(window)) {
-        glClear(GL_COLOR_BUFFER_BIT);
-        glfwSwapBuffers(window);
-        glfwPollEvents();
-    }
+  while (!glfwWindowShouldClose(window)) {
+    glfwPollEvents();
+  }
 
-    glfwTerminate();
-    return 0;
+  glfwDestroyWindow(window);
+  glfwTerminate();
+  return 0;
 }
